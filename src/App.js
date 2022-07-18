@@ -1,22 +1,22 @@
-
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Button from "./components/Button";
 import Input from "./components/Input";
 import TodoItem from "./components/TodoItem";
-import {addNewTodo, completeTodo, deleteTodo,fetchTodos} from "./redux/actions";
-import { ToastContainer, toast } from 'react-toastify';
+import {addNewTodo, completeTodo, deleteTodo, fetchTodos} from "./redux/actions";
+import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 const App = () => {
     const dispatch = useDispatch()
-    const { todos } = useSelector(s => s)
+    const {todos} = useSelector(s => s)
     const [todo, setTodo] = useState('')
     const addItem = (id) => {
-         setTodo("")
-        if(todo === "") {
-        toast.error("Please add name todo")
-        }else {
-            dispatch(addNewTodo(todo,id))
+        setTodo("")
+        if (todo === "") {
+            toast.error("Please add name todo")
+        } else {
+            dispatch(addNewTodo(todo))
             toast.success("Added new todo")
         }
 
@@ -26,19 +26,20 @@ const App = () => {
         setTodo(e.target.value)
     }
     const deleteItem = (id) => {
-         dispatch(deleteTodo(id))
+        dispatch(deleteTodo(id))
     }
-    const isDoneTodo = (id,todo,completed) => {
-        dispatch(completeTodo(id,todo,completed))
+    const isDoneTodo = (id, todo, completed) => {
+        dispatch(completeTodo(id, todo, completed))
     }
     const handlePress = (e) => {
-      if(e.code === "Enter" && todo.trim().length){
-          addItem()
-      }
+        if (e.code === "Enter" && todo.trim().length) {
+            addItem()
+        }
     }
     useEffect(() => {
-        dispatch( fetchTodos())
-    },[dispatch])
+        dispatch(fetchTodos())
+        dispatch(addNewTodo())
+    }, [dispatch])
 
     return (
         <div className="container">

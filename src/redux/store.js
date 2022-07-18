@@ -9,9 +9,9 @@ const initialState = {
 const storeReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_TODO_ITEMS:
-            return {...state, todos: action.payload}
+            return {...state,todos: action.payload}
         case ADD_TODO:
-            return {...state, todos: action.payload}
+            return {...state,todos: [...state.todos,action.payload]}
         case REMOVE_FROM_TODO:
             return {...state, todos: action.payload}
         case COMPLETE_ITEM:
