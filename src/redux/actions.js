@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 export const addNewTodo = (todo) => {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         axios.post(BASE_URL, {
             text: todo,
             completed: false,
@@ -29,7 +29,7 @@ export const fetchTodos = () => {
 export const deleteTodo = (id) => {
     return (dispatch, getState) => {
         const filteredTodo =  getState().todos.filter(item => item.id !== id)
-        axios.delete(`https://62d52c565112e98e485a33a3.mockapi.io/todos/${id}`)
+        axios.delete(`https://62cefb25826a88972d07096e.mockapi.io/todos/${id}`)
         .then(() => dispatch({
             type: REMOVE_FROM_TODO,
             payload: filteredTodo
@@ -38,18 +38,19 @@ export const deleteTodo = (id) => {
 }
 
 export const completeTodo = (id, todo, completed) => {
-    return async (dispatch, getState) => {
-        await axios.put(`https://62d52c565112e98e485a33a3.mockapi.io/todos/${id}`, {
-            completed: !completed
+    return (dispatch, getState) => {
+        const updatedTodos = getState().todos.map((item) => {
+            if (item.id === id) {
+                return {...item, completed: !item.completed}
+            }
+            return item
         })
-        return dispatch({
-            type: COMPLETE_ITEM,
-            payload: getState().todos.map((item) => {
-                if (item.id === id) {
-                    return {...item, completed: !item.completed}
-                }
-                return item
-            })
-        })
+         axios.put(`https://62cefb25826a88972d07096e.mockapi.io/todos/${id}`, {completed: !completed})
+             .then(() => {
+                 dispatch({
+                     type: COMPLETE_ITEM,
+                     payload: updatedTodos
+                 })
+             })
     }
 }

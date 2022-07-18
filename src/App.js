@@ -14,7 +14,7 @@ const App = () => {
     const addItem = (id) => {
         setTodo("")
         if (todo === "") {
-            toast.error("Please add name todo")
+            toast.error("Please add todo name")
         } else {
             dispatch(addNewTodo(todo))
             toast.success("Added new todo")
@@ -27,6 +27,7 @@ const App = () => {
     }
     const deleteItem = (id) => {
         dispatch(deleteTodo(id))
+        toast.warning("Todo has deleted")
     }
     const isDoneTodo = (id, todo, completed) => {
         dispatch(completeTodo(id, todo, completed))
@@ -38,7 +39,6 @@ const App = () => {
     }
     useEffect(() => {
         dispatch(fetchTodos())
-        dispatch(addNewTodo())
     }, [dispatch])
 
     return (
