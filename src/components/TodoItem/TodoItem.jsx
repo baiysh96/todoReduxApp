@@ -6,9 +6,10 @@ const TodoItem = ({todos, deleteItem, isDoneTodo}) => {
     return (
         <>
             <ul className="list-group">
+                {JSON.stringify(todos)}
                 {
-                    todos.length ?
-                        todos.map((item, index) => (
+                    todos?.length ?
+                        todos?.map((item, index) => (
                             <li key={index}
                                 className="pt-1 pb
                                     pe-1 ps-3 list-group-item

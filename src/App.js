@@ -1,40 +1,42 @@
+
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Button from "./components/Button";
 import Input from "./components/Input";
 import TodoItem from "./components/TodoItem";
-import {addNewTodo, completeTodo, deleteTodo, fetchTodos} from "./redux/actions";
+import {addNewTodo, completeTodo, deleteTodo,fetchTodos} from "./redux/actions";
 
 const App = () => {
     const dispatch = useDispatch()
-    const {todos} = useSelector(s => s)
-    const [todo, setTodo] = useState({})
-    const addItem = () => {
-        dispatch(addNewTodo(todo))
-        setTodo({
-            text: ''
-        })
+    const { todos } = useSelector(s => s)
+    const [todo, setTodo] = useState('')
+    const addItem = (e,id) => {
+            e.preventDefault()
+        if(todo.trim().length && todo === ""){
+           alert("add name todo")
+        }
+         dispatch(addNewTodo(todo,id))
+
     }
-    useEffect(() => {
-        dispatch(fetchTodos())
-        // dispatch(deleteTodo())
-        // dispatch(completeTodo())
-    }, [dispatch])
 
     const handleChange = (e) => {
         setTodo(e.target.value)
     }
     const deleteItem = (id) => {
-        dispatch(deleteTodo(id))
+         dispatch(deleteTodo(id))
     }
-    const isDoneTodo = (id, todo, completed) => {
-        dispatch(completeTodo(id, todo, completed))
+    const isDoneTodo = (id,todo,completed) => {
+        dispatch(completeTodo(id,todo,completed))
     }
     const handlePress = (e) => {
-        if (e.code === "Enter" && todo.trim().length) {
-            addItem()
-        }
+      if(e.code === "Enter" && todo.trim().length){
+          addItem()
+      }
     }
+    useEffect(() => {
+        dispatch( fetchTodos())
+    },[dispatch])
+
     return (
         <div className="container">
             <h2 className="text-center mt-5 text-bg-3"> Todo List with Redux</h2>

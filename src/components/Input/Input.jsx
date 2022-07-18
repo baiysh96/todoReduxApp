@@ -8,7 +8,7 @@ const Input = ({handleChange,todo,handlePress}) => {
                 className="form-control"
                 placeholder="Add a new todo"
                 onChange={handleChange}
-                value={todo.text}
+                value={todo}
                 onKeyPress={handlePress}
             />
         </>
