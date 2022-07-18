@@ -5,7 +5,7 @@ const Button = ({action}) => {
         <div>
             <button
                 className="btn btn-outline-success"
-                type="submit"
+                type="button"
                 onClick={action}
             >
                 Add

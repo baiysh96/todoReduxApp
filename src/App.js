@@ -5,17 +5,20 @@ import Button from "./components/Button";
 import Input from "./components/Input";
 import TodoItem from "./components/TodoItem";
 import {addNewTodo, completeTodo, deleteTodo,fetchTodos} from "./redux/actions";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
     const dispatch = useDispatch()
     const { todos } = useSelector(s => s)
     const [todo, setTodo] = useState('')
-    const addItem = (e,id) => {
-            e.preventDefault()
-        if(todo.trim().length && todo === ""){
-           alert("add name todo")
+    const addItem = (id) => {
+         setTodo("")
+        if(todo === "") {
+        toast.error("Please add name todo")
+        }else {
+            dispatch(addNewTodo(todo,id))
+            toast.success("Added new todo")
         }
-         dispatch(addNewTodo(todo,id))
 
     }
 
@@ -61,6 +64,9 @@ const App = () => {
                     />
                 </div>
             </div>
+            <ToastContainer
+                position={"top-center"}
+            />
         </div>
     );
 };

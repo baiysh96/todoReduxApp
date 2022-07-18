@@ -2,7 +2,6 @@ import React from 'react';
 // import Spinner from "../Spinner";
 
 const TodoItem = ({todos, deleteItem, isDoneTodo}) => {
-
     return (
         <>
             <ul className="list-group">
